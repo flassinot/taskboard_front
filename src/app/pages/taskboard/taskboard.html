@@ -1,8 +1,10 @@
 <div id="taskboard">
   <header><p>Tasks</p></header>
-  <div id="content">
-    @for (item of tasklists; track $index) {
-      <app-card-list [tasklist]="item" [tasks]="getTasks(item.id)"></app-card-list>
+  <div id="content" cdkDropListGroup>
+    @for (tasklist of combined(); track $index) {
+      <app-card-list [tasklist]="tasklist" [tasks]="tasklist.tasks"
+      cdkDropList [cdkDropListData]="tasklist.tasks" (cdkDropListDropped)="drop($event)"
+      ></app-card-list>
     }
   </div>
 </div>

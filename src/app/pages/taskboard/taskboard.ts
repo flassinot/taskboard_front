@@ -1,29 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { CdkDropList } from '@angular/cdk/drag-drop';
+import { Component, inject, OnInit } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { combineLatest, map } from 'rxjs';
 import { CardList } from "../../components/card-list/card-list";
-import { Task } from '../../models/task.model';
-import { Tasklist } from '../../models/tasklist.model';
-import { TasklistService } from '../../services/tasklist.service';
 import { TaskService } from '../../services/task.service';
+import { TasklistService } from '../../services/tasklist.service';
 
 @Component({
   selector: 'app-taskboard',
-  imports: [CardList],
+  imports: [CardList, CdkDropList],
   templateUrl: './taskboard.html',
   styleUrl: './taskboard.css',
 })
 export class Taskboard implements OnInit {
 
-  tasklists: Tasklist[] = [];
-  tasks: Task[] = [];
+  private taskService: TaskService = inject(TaskService);
+  private tasklistService: TasklistService = inject(TasklistService);
 
-  constructor(private taskService: TaskService, private tasklistService: TasklistService) { }
+  combined$ = combineLatest([
+    this.tasklistService.getTasklists(),
+    this.taskService.getTasks()
+  ]).pipe(
+    map(([lists, tasks]) =>
+      lists.map(list => ({
+        ...list,
+        tasks: tasks.filter(t => t.taskListId === list.id)
+      }))
+    )
+  );
+
+  combined = toSignal(this.combined$);
 
   ngOnInit(): void {
-    this.tasks = this.taskService.getTasks();
-    this.tasklists = this.tasklistService.getTasklists();
+    console.log('ngOnInit');
   }
 
-  getTasks(taskListId: number): Task[] {
-    return this.tasks.filter(t => t.taskListId === taskListId);
+  drop(event: any) {
+    console.info(event);
   }
 }

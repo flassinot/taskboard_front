@@ -1,6 +1,6 @@
 <div id="cardlist">
   <div id="name">
-    <p>Task list description : {{ tasklist()?.description }}</p>
+    <p>{{ tasklist()?.description }}</p>
   </div>
 
   @for (task of tasks(); track $index) {

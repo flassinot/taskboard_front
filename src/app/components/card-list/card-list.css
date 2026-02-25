@@ -1,5 +1,15 @@
 #cardlist {
-  border : solid #1c2325;
+  border : 1px solid #1c2325;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: baseline;
   padding: 5px;
   margin: 5px;
+  min-height: 500px;
+  min-width: 200px;
+}
+
+#name {
+  text-align: center;
 }
