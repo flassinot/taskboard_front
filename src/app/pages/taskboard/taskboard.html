@@ -1,0 +1,8 @@
+<div id="taskboard">
+  <header><p>Tasks</p></header>
+  <div id="content">
+    @for (item of tasklists; track $index) {
+      <app-card-list [tasklist]="item" [tasks]="getTasks(item.id)"></app-card-list>
+    }
+  </div>
+</div>

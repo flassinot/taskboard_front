@@ -2,7 +2,25 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.
 
-## Development server
+## Pages
+
+### Taskboard
+
+Contient les tasklists
+
+## Composants
+
+### Card
+
+Affiche 1 task
+
+### card-list
+
+Contient 1 tasklist
+3 : TODO, DOING, DONE
+
+
+## Lancer le front
 
 To start a local development server, run:
 
